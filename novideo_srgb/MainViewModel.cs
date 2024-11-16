@@ -127,6 +127,12 @@ namespace novideo_srgb
         {
             try
             {
+                List<XElement> offlineEntries = null; 
+                if (File.Exists(_configPath))
+                {
+                    List<XElement> config = XElement.Load(_configPath).Descendants("monitor").ToList();
+                    offlineEntries = config.FindAll(x => !Monitors.Any(m => m.Path == (string)x.Attribute("path")));
+                }
                 var xElem = new XElement("monitors",
                     Monitors.Select(x =>
                         new XElement("monitor", new XAttribute("path", x.Path),
@@ -139,6 +145,10 @@ namespace novideo_srgb
                             new XAttribute("custom_percentage", x.CustomPercentage),
                             new XAttribute("target", x.Target),
                             new XAttribute("disable_optimization", x.DisableOptimization))));
+                if (offlineEntries != null)
+                {
+                    xElem.Add(offlineEntries);
+                }
                 xElem.Save(_configPath);
             }
             catch (Exception ex)
