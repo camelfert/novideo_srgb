@@ -186,6 +186,7 @@ namespace novideo_srgb
         {
             SetColorSpaceConversion(output, MatrixToColorSpaceConversion(matrix));
         }
+        
 
         public static unsafe void SetColorSpaceConversion(GPUOutput output, ICCMatrixProfile profile,
             Colorimetry.ColorSpace target,

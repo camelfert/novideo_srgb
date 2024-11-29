@@ -51,6 +51,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Label HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0">Red </Label>
                             <TextBox IsEnabled="False"
@@ -91,6 +92,21 @@
                                      Grid.Row="2" Grid.Column="3"
                                      VerticalAlignment="Center" />
                             <Label Grid.Row="2" Grid.Column="4">y</Label>
+                             <TextBox IsEnabled="True"
+                                     IsReadOnly="False"
+                                     Grid.Row="3" Grid.Column="1"
+                                     VerticalAlignment="Center" >
+                                <TextBox.Text>
+                                <Binding Path="RedScaler"
+                                         UpdateSourceTrigger="LostFocus">
+                                </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <TextBox IsEnabled="False"
+                                     Text="{Binding RedScaler}"
+                                     IsReadOnly="True"
+                                     Grid.Row="3" Grid.Column="3"
+                                     VerticalAlignment="Center" />
                         </Grid>
                         <TextBlock TextWrapping="Wrap" Visibility="{Binding EdidWarning}" Foreground="Red">Primaries match target – cannot clamp</TextBlock>
                         <TextBlock TextWrapping="Wrap" Visibility="{Binding HdrWarning}" Foreground="Red">HDR is active – cannot clamp</TextBlock>

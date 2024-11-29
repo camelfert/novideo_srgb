@@ -13,6 +13,7 @@ namespace novideo_srgb
 
         private MonitorData _monitor;
 
+        private double _redScaler;
         private int _target;
         private bool _useIcc;
         private string _profilePath;
@@ -43,10 +44,10 @@ namespace novideo_srgb
             _customGamma = monitor.CustomGamma;
             _customPercentage = monitor.CustomPercentage;
             _disableOptimization = monitor.DisableOptimization;
-
             _ditherBits = dither.bits;
             _ditherMode = dither.mode;
             _ditherState = dither.state;
+            _redScaler = monitor.RedScaler;
         }
 
         public void ApplyChanges()
@@ -67,6 +68,8 @@ namespace novideo_srgb
             _monitor.CustomPercentage = _customPercentage;
             ChangedCalibration |= _monitor.DisableOptimization != _disableOptimization;
             _monitor.DisableOptimization = _disableOptimization;
+            ChangedCalibration |= _monitor.RedScaler != _redScaler;
+            _monitor.RedScaler = _redScaler;
         }
 
         public ChromaticityCoordinates Coords => _monitor.Edid.DisplayParameters.ChromaticityCoordinates;
@@ -160,6 +163,20 @@ namespace novideo_srgb
             get => _target;
         }
 
+
+        public double RedScaler {
+            set
+            {
+                // return early if no updated is needed.
+                if(value == RedScaler) {
+                    return;
+                }
+                _redScaler = value;
+                OnPropertyChanged();
+                
+            }
+            get => _redScaler;
+        }
         public Visibility HdrWarning => _monitor.HdrActive ? Visibility.Visible : Visibility.Collapsed;
         public Visibility EdidWarning => HdrWarning != Visibility.Visible && UseEdid && Colorimetry.ColorSpaces[_target].Equals(_monitor.EdidColorSpace)
             ? Visibility.Visible

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
+using System.Xml.Schema;
 using EDIDParser;
 using EDIDParser.Descriptors;
 using EDIDParser.Enums;
@@ -24,6 +25,9 @@ namespace novideo_srgb
 
         private MainViewModel _viewModel;
 
+        /**
+        * Called when settings is undefined, defaults most of the values.
+        **/
         public MonitorData(MainViewModel viewModel, int number, Display display, string path, bool hdrActive, bool clampSdr)
         {
             _viewModel = viewModel;
@@ -73,11 +77,15 @@ namespace novideo_srgb
             ProfilePath = "";
             CustomGamma = 2.2;
             CustomPercentage = 100;
+            RedScaler = 1.0;
         }
 
+        /**
+        * Called when the settings is defined.
+        **/
         public MonitorData(MainViewModel viewModel, int number, Display display, string path, bool hdrActive, bool clampSdr, bool useIcc, string profilePath,
             bool calibrateGamma,
-            int selectedGamma, double customGamma, double customPercentage, int target, bool disableOptimization) :
+            int selectedGamma, double customGamma, double customPercentage, int target, bool disableOptimization, double redScaler) :
             this(viewModel, number, display, path, hdrActive, clampSdr)
         {
             UseIcc = useIcc;
@@ -88,6 +96,7 @@ namespace novideo_srgb
             CustomPercentage = customPercentage;
             Target = target;
             DisableOptimization = disableOptimization;
+            RedScaler = redScaler;
         }
 
         public int Number { get; }
@@ -225,9 +234,17 @@ namespace novideo_srgb
 
         public int Target { set; get; }
 
+        public double RedScaler { set; get; }
+
         public Colorimetry.ColorSpace EdidColorSpace { get; }
 
-        private Colorimetry.ColorSpace TargetColorSpace => Colorimetry.ColorSpaces[Target];
+        private Colorimetry.ColorSpace TargetColorSpace {
+            get{
+                Colorimetry.ColorSpace space =  Colorimetry.ColorSpaces[Target];
+                space.Red.X = space.Red.X * RedScaler;
+                return space;
+            }
+             }
 
         public Novideo.DitherControl DitherControl => _dither;
 
@@ -256,6 +273,8 @@ namespace novideo_srgb
             }
         }
 
+
+        
         public int BitDepth => _bitDepth;
 
         public void ApplyDither(int state, int bits, int mode)

@@ -79,9 +79,9 @@ namespace novideo_srgb
 
         public static ColorSpace AdobeRGB = new ColorSpace
         {
-            Red = new Point { X = 0.64, Y = 0.33 },
-            Green = new Point { X = 0.21, Y = 0.71 },
-            Blue = new Point { X = 0.15, Y = 0.06 },
+            Red = new Point { X = 0.66, Y = 0.330156 },
+            Green = new Point { X = 0.29524, Y = 0.7 },
+            Blue = new Point { X = 0.14, Y = 0.043393 },
             White = D65
         };
 
@@ -93,7 +93,15 @@ namespace novideo_srgb
             White = D65
         };
 
-        public static ColorSpace[] ColorSpaces => new[] { sRGB, DisplayP3, AdobeRGB, BT2020 };
+        public static ColorSpace SatSRGB = new ColorSpace
+        {
+            Red = new Point { X = 0.66, Y = 0.330156 },
+            Green = new Point { X = 0.29524, Y = 0.7 },
+            Blue = new Point { X = 0.14, Y = 0.043393 },
+            White = D65
+        };
+
+        public static ColorSpace[] ColorSpaces => new[] { sRGB, DisplayP3, AdobeRGB, BT2020, SatSRGB };
 
         public static Matrix D50 = Matrix.FromValues(new[,] { { 0.9642 }, { 1 }, { 0.8249 } });
 
