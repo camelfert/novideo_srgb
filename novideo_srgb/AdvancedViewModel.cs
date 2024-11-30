@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows;
 using EDIDParser;
 
@@ -25,12 +26,6 @@ namespace novideo_srgb
         private double _customPercentage;
         private bool _disableOptimization;
         private bool _linearScaleSpace;
-        private double _scaledRedX;
-        private double _scaledRedY;
-        private double _scaledGreenX;
-        private double _scaledGreenY;
-        private double _scaledBlueX;
-        private double _scaledBlueY;
 
 
         private int _ditherState;
@@ -61,12 +56,6 @@ namespace novideo_srgb
             _greenScaler = monitor.GreenScaler;
             _blueScaler = monitor.BlueScaler;
             _linearScaleSpace = monitor.LinearScaleSpace;
-            _scaledRedX = monitor.TargetColorSpace.Red.X;
-            _scaledRedY = monitor.TargetColorSpace.Red.Y;
-            _scaledGreenX = monitor.TargetColorSpace.Green.X;
-            _scaledGreenY = monitor.TargetColorSpace.Green.Y;
-            _scaledBlueX = monitor.TargetColorSpace.Blue.X;
-            _scaledBlueY = monitor.TargetColorSpace.Blue.Y;
         }
 
         public void ApplyChanges()
@@ -161,65 +150,18 @@ namespace novideo_srgb
             get => _linearScaleSpace;
         }
 
-        public double ScaledRedX
-        {
-            set
-            {
-                _scaledRedX = value;
-                OnPropertyChanged();
-            }
-            get => _scaledRedX;
-        }
+        public double ScaledRedX => Colorimetry.D65.X + (Colorimetry.ColorSpaces[Target].Red.X - Colorimetry.D65.X) * RedScaler / 100;
 
-        public double ScaledRedY
-        {
-            set
-            {
-                _scaledRedY = value;
-                OnPropertyChanged();
-            }
-            get => _scaledRedY;
-        }
+        public double ScaledRedY => Colorimetry.D65.Y + (Colorimetry.ColorSpaces[Target].Red.Y - Colorimetry.D65.Y) * RedScaler / 100;
 
-        public double ScaledGreenX
-        {
-            set
-            {
-                _scaledGreenX = value;
-                OnPropertyChanged();
-            }
-            get => _scaledGreenX;
-        }
+        public double ScaledGreenX => Colorimetry.D65.X + (Colorimetry.ColorSpaces[Target].Green.X - Colorimetry.D65.X) * GreenScaler / 100;
 
-        public double ScaledGreenY
-        {
-            set
-            {
-                _scaledGreenY = value;
-                OnPropertyChanged();
-            }
-            get => _scaledGreenY;
-        }
+        public double ScaledGreenY => Colorimetry.D65.Y + (Colorimetry.ColorSpaces[Target].Green.Y - Colorimetry.D65.Y) * GreenScaler / 100;
 
-        public double ScaledBlueX
-        {
-            set
-            {
-                _scaledBlueX = value;
-                OnPropertyChanged();
-            }
-            get => _scaledBlueX;
-        }
+        public double ScaledBlueX => Colorimetry.D65.X + (Colorimetry.ColorSpaces[Target].Blue.X - Colorimetry.D65.X) * BlueScaler / 100;
 
-        public double ScaledBlueY
-        {
-            set
-            {
-                _scaledBlueY = value;
-                OnPropertyChanged();
-            }
-            get => _scaledBlueY;
-        }
+        public double ScaledBlueY => Colorimetry.D65.Y + (Colorimetry.ColorSpaces[Target].Blue.Y - Colorimetry.D65.Y) * BlueScaler / 100;
+
 
         public int SelectedGamma
         {
@@ -255,6 +197,12 @@ namespace novideo_srgb
                 _target = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(EdidWarning));
+                OnPropertyChanged(nameof(ScaledRedX));
+                OnPropertyChanged(nameof(ScaledRedY));
+                OnPropertyChanged(nameof(ScaledGreenX));
+                OnPropertyChanged(nameof(ScaledGreenY));
+                OnPropertyChanged(nameof(ScaledBlueX));
+                OnPropertyChanged(nameof(ScaledBlueY));
             }
             get => _target;
         }
@@ -271,7 +219,12 @@ namespace novideo_srgb
                 }
                 _redScaler = value;
                 OnPropertyChanged();
-
+                OnPropertyChanged(nameof(ScaledRedX));
+                OnPropertyChanged(nameof(ScaledRedY));
+                OnPropertyChanged(nameof(ScaledGreenX));
+                OnPropertyChanged(nameof(ScaledGreenY));
+                OnPropertyChanged(nameof(ScaledBlueX));
+                OnPropertyChanged(nameof(ScaledBlueY));
             }
             get => _redScaler;
         }
@@ -287,6 +240,12 @@ namespace novideo_srgb
                 }
                 _greenScaler = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(ScaledRedX));
+                OnPropertyChanged(nameof(ScaledRedY));
+                OnPropertyChanged(nameof(ScaledGreenX));
+                OnPropertyChanged(nameof(ScaledGreenY));
+                OnPropertyChanged(nameof(ScaledBlueX));
+                OnPropertyChanged(nameof(ScaledBlueY));
 
             }
             get => _greenScaler;
@@ -303,6 +262,12 @@ namespace novideo_srgb
                 }
                 _blueScaler = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(ScaledRedX));
+                OnPropertyChanged(nameof(ScaledRedY));
+                OnPropertyChanged(nameof(ScaledGreenX));
+                OnPropertyChanged(nameof(ScaledGreenY));
+                OnPropertyChanged(nameof(ScaledBlueX));
+                OnPropertyChanged(nameof(ScaledBlueY));
 
             }
             get => _blueScaler;

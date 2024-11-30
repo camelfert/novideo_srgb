@@ -79,10 +79,12 @@
                                  VerticalAlignment="Center">
                                 <TextBox.Text>
                                     <Binding Path="RedScaler"
-                                             
-                                             UpdateSourceTrigger="LostFocus"
-                                            >
-                                    </Binding>
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <local:RangeRule Min="-999999"
+                                                         Max="999999" />
+                                    </Binding.ValidationRules>
+                                </Binding>
                                 </TextBox.Text>
                             </TextBox>
                             <Label Grid.Row="0"
@@ -118,8 +120,11 @@
                                  VerticalAlignment="Center">
                             <TextBox.Text>
                                 <Binding Path="GreenScaler"
-                                         UpdateSourceTrigger="LostFocus"
-                                         >
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <local:RangeRule Min="-999999"
+                                                         Max="999999" />
+                                    </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
@@ -154,8 +159,11 @@
                                  VerticalAlignment="Center">
                             <TextBox.Text>
                                 <Binding Path="BlueScaler"
-                                         UpdateSourceTrigger="LostFocus"
-                                         >
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <local:RangeRule Min="-999999"
+                                                         Max="999999" />
+                                    </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
