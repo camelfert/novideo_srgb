@@ -131,6 +131,12 @@ namespace novideo_srgb
         {
             try
             {
+                List<XElement> offlineEntries = null; 
+                if (File.Exists(_configPath))
+                {
+                    List<XElement> config = XElement.Load(_configPath).Descendants("monitor").ToList();
+                    offlineEntries = config.FindAll(x => !Monitors.Any(m => m.Path == (string)x.Attribute("path")));
+                }
                 var xElem = new XElement("monitors",
                     Monitors.Select(x =>
                         new XElement("monitor", new XAttribute("path", x.Path),
@@ -147,6 +153,10 @@ namespace novideo_srgb
                             new XAttribute("green_scaler", x.GreenScaler),
                             new XAttribute("blue_scaler", x.BlueScaler),
                             new XAttribute("linear_scale_space", x.LinearScaleSpace))));
+                if (offlineEntries != null)
+                {
+                    xElem.Add(offlineEntries);
+                }
                 xElem.Save(_configPath);
             }
             catch (Exception ex)
