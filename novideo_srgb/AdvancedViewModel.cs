@@ -14,6 +14,8 @@ namespace novideo_srgb
         private MonitorData _monitor;
 
         private double _redScaler;
+        private double _greenScaler;
+        private double _blueScaler;
         private int _target;
         private bool _useIcc;
         private string _profilePath;
@@ -22,6 +24,14 @@ namespace novideo_srgb
         private double _customGamma;
         private double _customPercentage;
         private bool _disableOptimization;
+        private bool _linearScaleSpace;
+        private double _scaledRedX;
+        private double _scaledRedY;
+        private double _scaledGreenX;
+        private double _scaledGreenY;
+        private double _scaledBlueX;
+        private double _scaledBlueY;
+
 
         private int _ditherState;
         private int _ditherMode;
@@ -48,6 +58,15 @@ namespace novideo_srgb
             _ditherMode = dither.mode;
             _ditherState = dither.state;
             _redScaler = monitor.RedScaler;
+            _greenScaler = monitor.GreenScaler;
+            _blueScaler = monitor.BlueScaler;
+            _linearScaleSpace = monitor.LinearScaleSpace;
+            _scaledRedX = monitor.TargetColorSpace.Red.X;
+            _scaledRedY = monitor.TargetColorSpace.Red.Y;
+            _scaledGreenX = monitor.TargetColorSpace.Green.X;
+            _scaledGreenY = monitor.TargetColorSpace.Green.Y;
+            _scaledBlueX = monitor.TargetColorSpace.Blue.X;
+            _scaledBlueY = monitor.TargetColorSpace.Blue.Y;
         }
 
         public void ApplyChanges()
@@ -70,6 +89,12 @@ namespace novideo_srgb
             _monitor.DisableOptimization = _disableOptimization;
             ChangedCalibration |= _monitor.RedScaler != _redScaler;
             _monitor.RedScaler = _redScaler;
+            ChangedCalibration |= _monitor.RedScaler != _greenScaler;
+            _monitor.GreenScaler = _greenScaler;
+            ChangedCalibration |= _monitor.RedScaler != _blueScaler;
+            _monitor.BlueScaler = _blueScaler;
+            ChangedCalibration |= _monitor.LinearScaleSpace != _linearScaleSpace;
+            _monitor.LinearScaleSpace = _linearScaleSpace;
         }
 
         public ChromaticityCoordinates Coords => _monitor.Edid.DisplayParameters.ChromaticityCoordinates;
@@ -125,6 +150,77 @@ namespace novideo_srgb
             get => _calibrateGamma;
         }
 
+        public bool LinearScaleSpace
+        {
+            set
+            {
+                if (value == _linearScaleSpace) return;
+                _linearScaleSpace = value;
+                OnPropertyChanged();
+            }
+            get => _linearScaleSpace;
+        }
+
+        public double ScaledRedX
+        {
+            set
+            {
+                _scaledRedX = value;
+                OnPropertyChanged();
+            }
+            get => _scaledRedX;
+        }
+
+        public double ScaledRedY
+        {
+            set
+            {
+                _scaledRedY = value;
+                OnPropertyChanged();
+            }
+            get => _scaledRedY;
+        }
+
+        public double ScaledGreenX
+        {
+            set
+            {
+                _scaledGreenX = value;
+                OnPropertyChanged();
+            }
+            get => _scaledGreenX;
+        }
+
+        public double ScaledGreenY
+        {
+            set
+            {
+                _scaledGreenY = value;
+                OnPropertyChanged();
+            }
+            get => _scaledGreenY;
+        }
+
+        public double ScaledBlueX
+        {
+            set
+            {
+                _scaledBlueX = value;
+                OnPropertyChanged();
+            }
+            get => _scaledBlueX;
+        }
+
+        public double ScaledBlueY
+        {
+            set
+            {
+                _scaledBlueY = value;
+                OnPropertyChanged();
+            }
+            get => _scaledBlueY;
+        }
+
         public int SelectedGamma
         {
             set
@@ -164,19 +260,54 @@ namespace novideo_srgb
         }
 
 
-        public double RedScaler {
+        public double RedScaler
+        {
             set
             {
                 // return early if no updated is needed.
-                if(value == RedScaler) {
+                if (value == RedScaler)
+                {
                     return;
                 }
                 _redScaler = value;
                 OnPropertyChanged();
-                
+
             }
             get => _redScaler;
         }
+
+        public double GreenScaler
+        {
+            set
+            {
+                // return early if no updated is needed.
+                if (value == GreenScaler)
+                {
+                    return;
+                }
+                _greenScaler = value;
+                OnPropertyChanged();
+
+            }
+            get => _greenScaler;
+        }
+
+        public double BlueScaler
+        {
+            set
+            {
+                // return early if no updated is needed.
+                if (value == BlueScaler)
+                {
+                    return;
+                }
+                _blueScaler = value;
+                OnPropertyChanged();
+
+            }
+            get => _blueScaler;
+        }
+
         public Visibility HdrWarning => _monitor.HdrActive ? Visibility.Visible : Visibility.Collapsed;
         public Visibility EdidWarning => HdrWarning != Visibility.Visible && UseEdid && Colorimetry.ColorSpaces[_target].Equals(_monitor.EdidColorSpace)
             ? Visibility.Visible

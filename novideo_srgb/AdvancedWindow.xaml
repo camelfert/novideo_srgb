@@ -13,9 +13,11 @@
         <local:AdvancedViewModel />
     </d:Window.DataContext>
     <Window.Resources>
-        <Style x:Key="TextBoxInError" TargetType="{x:Type TextBox}">
+        <Style x:Key="TextBoxInError"
+               TargetType="{x:Type TextBox}">
             <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="true">
+                <Trigger Property="Validation.HasError"
+                         Value="true">
                     <Setter Property="ToolTip"
                             Value="{Binding RelativeSource={x:Static RelativeSource.Self},
                         Path=(Validation.Errors)/ErrorContent}" />
@@ -24,20 +26,168 @@
         </Style>
     </Window.Resources>
     <StackPanel Margin="6,0,6,6">
-        <GroupBox Header="Calibration" Padding="6">
+        <GroupBox Header="Calibration"
+                  Padding="6">
             <StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                    <TextBlock VerticalAlignment="Center" Text="Target" />
-                    <ComboBox SelectedIndex="{Binding Target}" Margin="6,0,0,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,0,0,6">
+                    <TextBlock VerticalAlignment="Center"
+                               Text="Target" />
+                    <ComboBox SelectedIndex="{Binding Target}"
+                              Margin="6,0,0,0">
                         <ComboBoxItem>sRGB/BT.709</ComboBoxItem>
                         <ComboBoxItem>Display P3</ComboBoxItem>
                         <ComboBoxItem>Adobe RGB</ComboBoxItem>
                         <ComboBoxItem>BT.2020</ComboBoxItem>
                     </ComboBox>
+
                 </StackPanel>
-                <RadioButton IsChecked="{Binding UseEdid}" Margin="0,0,0, 6">
+                <CheckBox IsChecked="{Binding LinearScaleSpace}"
+                          VerticalAlignment="Center">Linearly Scale Space</CheckBox>
+                    <StackPanel IsEnabled="{Binding LinearScaleSpace}">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            
+                            
+                            <Label HorizontalAlignment="Right"
+                                   Grid.Row="0"
+                                   Grid.Column="1">Red</Label>
+                            <TextBox IsEnabled="True"
+                                     IsReadOnly="False"
+                                     Style="{StaticResource TextBoxInError}"
+                                     Grid.Row="0"
+                                 Grid.Column="2"
+                                 Width="50"
+                                 VerticalAlignment="Center">
+                                <TextBox.Text>
+                                    <Binding Path="RedScaler"
+                                             
+                                             UpdateSourceTrigger="PropertyChanged"
+                                            >
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <Label Grid.Row="0"
+                                   Grid.Column="3">sat%</Label>
+                            <TextBox IsEnabled="False"
+                                     Text="{Binding ScaledRedX, Mode=OneWay, StringFormat={}{0:#,0.000}}"
+                                     IsReadOnly="True"
+                                     Grid.Row="0"
+                                     Grid.Column="4"
+                                     VerticalAlignment="Center" />
+                            <Label Grid.Row="0"
+                                   Grid.Column="5">x</Label>
+                            <TextBox IsEnabled="False"
+                                     Text="{Binding ScaledRedY, Mode=OneWay, StringFormat={}{0:#,0.000}}"
+                                     IsReadOnly="True"
+                                     Grid.Row="0"
+                                     Grid.Column="6"
+                                     VerticalAlignment="Center" />
+                            <Label Grid.Row="0"
+                                   Grid.Column="7">y</Label>
+                            
+                            
+                            
+                        <Label HorizontalAlignment="Right"
+                               Grid.Row="1"
+                               Grid.Column="1">Green</Label>
+                        <TextBox IsEnabled="True"
+                                 IsReadOnly="False"
+                                 Style="{StaticResource TextBoxInError}"
+                                 Grid.Row="1"
+                                 Grid.Column="2"
+                                 Width="50"
+                                 VerticalAlignment="Center">
+                            <TextBox.Text>
+                                <Binding Path="GreenScaler"
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         >
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Grid.Row="1"
+                               Grid.Column="3">sat%</Label>
+                        <TextBox IsEnabled="False"
+                                 Text="{Binding ScaledGreenX, Mode=OneWay, StringFormat={}{0:#,0.000}}"
+                                 IsReadOnly="True"
+                                 Grid.Row="1"
+                                 Grid.Column="4"
+                                 VerticalAlignment="Center" />
+                        <Label Grid.Row="1"
+                               Grid.Column="5">x</Label>
+                        <TextBox IsEnabled="False"
+                                 Text="{Binding ScaledGreenY, Mode=OneWay, StringFormat={}{0:#,0.000}}"
+                                 IsReadOnly="True"
+                                 Grid.Row="1"
+                                 Grid.Column="6"
+                                 VerticalAlignment="Center" />
+                        <Label Grid.Row="1"
+                               Grid.Column="7">y</Label>
+
+                        <Label HorizontalAlignment="Right"
+                               Grid.Row="2"
+                               Grid.Column="1">Blue</Label>
+                        <TextBox IsEnabled="True"
+                                 IsReadOnly="False"
+                                 Style="{StaticResource TextBoxInError}"
+                                 Grid.Row="2"
+                                 Grid.Column="2"
+                                 Width="50"
+                                 VerticalAlignment="Center">
+                            <TextBox.Text>
+                                <Binding Path="BlueScaler"
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         >
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Grid.Row="2"
+                               Grid.Column="3">sat%</Label>
+                        <TextBox IsEnabled="False"
+                                 Text="{Binding ScaledBlueX, Mode=OneWay, StringFormat={}{0:#,0.000}}"
+                                 IsReadOnly="True"
+                                 Grid.Row="2"
+                                 Grid.Column="4"
+                                 VerticalAlignment="Center" />
+                        <Label Grid.Row="2"
+                               Grid.Column="5">x</Label>
+                        <TextBox IsEnabled="False"
+                                 Text="{Binding ScaledBlueY, Mode=OneWay, StringFormat={}{0:#,0.000}}"
+                                 IsReadOnly="True"
+                                 Grid.Row="2"
+                                 Grid.Column="6"
+                                 VerticalAlignment="Center" />
+                        <Label Grid.Row="2"
+                               Grid.Column="7">y</Label>
+
+
+
+                    </Grid>
+                    </StackPanel>
+                
+                <RadioButton IsChecked="{Binding UseEdid}"
+                             Margin="0,0,0, 6">
                     <StackPanel IsEnabled="{Binding UseEdid}">
-                        <TextBlock Text="Use EDID primaries" Margin="0,0,0,0" />
+                        <TextBlock Text="Use EDID primaries"
+                                   Margin="0,0,0,0" />
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -53,84 +203,99 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Label HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0">Red </Label>
+                            <Label HorizontalAlignment="Right"
+                                   Grid.Row="0"
+                                   Grid.Column="0">Red</Label>
                             <TextBox IsEnabled="False"
                                      Text="{Binding Coords.RedX, Mode=OneWay, StringFormat={}{0:#,0.000}}"
                                      IsReadOnly="True"
-                                     Grid.Row="0" Grid.Column="1"
+                                     Grid.Row="0"
+                                     Grid.Column="1"
                                      VerticalAlignment="Center" />
-                            <Label Grid.Row="0" Grid.Column="2">x</Label>
+                            <Label Grid.Row="0"
+                                   Grid.Column="2">x</Label>
                             <TextBox IsEnabled="False"
                                      Text="{Binding Coords.RedY, Mode=OneWay, StringFormat={}{0:#,0.000}}"
                                      IsReadOnly="True"
-                                     Grid.Row="0" Grid.Column="3"
+                                     Grid.Row="0"
+                                     Grid.Column="3"
                                      VerticalAlignment="Center" />
-                            <Label Grid.Row="0" Grid.Column="4">y</Label>
-                            <Label HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0">Green </Label>
+                            <Label Grid.Row="0"
+                                   Grid.Column="4">y</Label>
+                            <Label HorizontalAlignment="Right"
+                                   Grid.Row="1"
+                                   Grid.Column="0">Green</Label>
                             <TextBox IsEnabled="False"
                                      Text="{Binding Coords.GreenX, Mode=OneWay, StringFormat={}{0:#,0.000}}"
                                      IsReadOnly="True"
-                                     Grid.Row="1" Grid.Column="1"
+                                     Grid.Row="1"
+                                     Grid.Column="1"
                                      VerticalAlignment="Center" />
-                            <Label Grid.Row="1" Grid.Column="2">x</Label>
+                            <Label Grid.Row="1"
+                                   Grid.Column="2">x</Label>
                             <TextBox IsEnabled="False"
                                      Text="{Binding Coords.GreenY, Mode=OneWay, StringFormat={}{0:#,0.000}}"
                                      IsReadOnly="True"
-                                     Grid.Row="1" Grid.Column="3"
+                                     Grid.Row="1"
+                                     Grid.Column="3"
                                      VerticalAlignment="Center" />
-                            <Label Grid.Row="1" Grid.Column="4">y</Label>
-                            <Label HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0">Blue </Label>
+                            <Label Grid.Row="1"
+                                   Grid.Column="4">y</Label>
+                            <Label HorizontalAlignment="Right"
+                                   Grid.Row="2"
+                                   Grid.Column="0">Blue</Label>
                             <TextBox IsEnabled="False"
                                      Text="{Binding Coords.BlueX, Mode=OneWay, StringFormat={}{0:#,0.000}}"
                                      IsReadOnly="True"
-                                     Grid.Row="2" Grid.Column="1"
+                                     Grid.Row="2"
+                                     Grid.Column="1"
                                      VerticalAlignment="Center" />
-                            <Label Grid.Row="2" Grid.Column="2">x</Label>
+                            <Label Grid.Row="2"
+                                   Grid.Column="2">x</Label>
                             <TextBox IsEnabled="False"
                                      Text="{Binding Coords.BlueY, Mode=OneWay, StringFormat={}{0:#,0.000}}"
                                      IsReadOnly="True"
-                                     Grid.Row="2" Grid.Column="3"
+                                     Grid.Row="2"
+                                     Grid.Column="3"
                                      VerticalAlignment="Center" />
-                            <Label Grid.Row="2" Grid.Column="4">y</Label>
-                             <TextBox IsEnabled="True"
-                                     IsReadOnly="False"
-                                     Grid.Row="3" Grid.Column="1"
-                                     VerticalAlignment="Center" >
-                                <TextBox.Text>
-                                <Binding Path="RedScaler"
-                                         UpdateSourceTrigger="LostFocus">
-                                </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <TextBox IsEnabled="False"
-                                     Text="{Binding RedScaler}"
-                                     IsReadOnly="True"
-                                     Grid.Row="3" Grid.Column="3"
-                                     VerticalAlignment="Center" />
+                            <Label Grid.Row="2"
+                                   Grid.Column="4">y</Label>
                         </Grid>
-                        <TextBlock TextWrapping="Wrap" Visibility="{Binding EdidWarning}" Foreground="Red">Primaries match target – cannot clamp</TextBlock>
-                        <TextBlock TextWrapping="Wrap" Visibility="{Binding HdrWarning}" Foreground="Red">HDR is active – cannot clamp</TextBlock>
+                        <TextBlock TextWrapping="Wrap"
+                                   Visibility="{Binding EdidWarning}"
+                                   Foreground="Red">Primaries match target – cannot clamp</TextBlock>
+                        <TextBlock TextWrapping="Wrap"
+                                   Visibility="{Binding HdrWarning}"
+                                   Foreground="Red">HDR is active – cannot clamp</TextBlock>
                     </StackPanel>
                 </RadioButton>
-                <RadioButton IsChecked="{Binding UseIcc}" HorizontalContentAlignment="Stretch">
+                <RadioButton IsChecked="{Binding UseIcc}"
+                             HorizontalContentAlignment="Stretch">
                     <StackPanel IsEnabled="{Binding UseIcc}">
-                        <TextBlock Text="Use ICC profile" Margin="0,0,0,6" />
+                        <TextBlock Text="Use ICC profile"
+                                   Margin="0,0,0,6" />
                         <Grid Margin="0,0,0, 6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBox IsEnabled="False" Grid.Column="0" IsReadOnly="True"
+                            <TextBox IsEnabled="False"
+                                     Grid.Column="0"
+                                     IsReadOnly="True"
                                      Text="{Binding ProfileName, Mode=OneWay}" />
                             <Button Grid.Column="1"
                                     Content="Browse..."
                                     Click="Browse_Click"
-                                    Width="75" Margin="6,0,0,0" />
+                                    Width="75"
+                                    Margin="6,0,0,0" />
                         </Grid>
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding CalibrateGamma}" VerticalAlignment="Center">Calibrate gamma to</CheckBox>
-                            <ComboBox IsEnabled="{Binding CalibrateGamma}" SelectedIndex="{Binding SelectedGamma}"
-                                      VerticalAlignment="Center" Margin="6,0,0,0">
+                            <CheckBox IsChecked="{Binding CalibrateGamma}"
+                                      VerticalAlignment="Center">Calibrate gamma to</CheckBox>
+                            <ComboBox IsEnabled="{Binding CalibrateGamma}"
+                                      SelectedIndex="{Binding SelectedGamma}"
+                                      VerticalAlignment="Center"
+                                      Margin="6,0,0,0">
                                 <ComboBoxItem>sRGB</ComboBoxItem>
                                 <ComboBoxItem>BT.1886</ComboBoxItem>
                                 <ComboBoxItem>Absolute</ComboBoxItem>
@@ -140,42 +305,55 @@
                             <TextBox IsEnabled="{Binding CalibrateGamma}"
                                      Visibility="{Binding UseCustomGamma, Mode=OneWay}"
                                      Style="{StaticResource TextBoxInError}"
-                                     VerticalContentAlignment="Center" Width="50" Margin="6,0,0,0">
+                                     VerticalContentAlignment="Center"
+                                     Width="50"
+                                     Margin="6,0,0,0">
                                 <TextBox.Text>
                                     <Binding Path="CustomGamma"
                                              UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
-                                            <local:RangeRule Min="1" Max="4" />
+                                            <local:RangeRule Min="1"
+                                                             Max="4" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
                         </StackPanel>
-                        <StackPanel Visibility="{Binding UseCustomGamma}" IsEnabled="{Binding CalibrateGamma}"
+                        <StackPanel Visibility="{Binding UseCustomGamma}"
+                                    IsEnabled="{Binding CalibrateGamma}"
                                     Orientation="Horizontal">
                             <TextBlock VerticalAlignment="Center">with</TextBlock>
-                            <TextBox
-                                VerticalAlignment="Center" VerticalContentAlignment="Center" TextAlignment="Right"
-                                Height="22" Width="50" Style="{StaticResource TextBoxInError}" Margin="6,0,0,0">
+                            <TextBox VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     TextAlignment="Right"
+                                     Height="22"
+                                     Width="50"
+                                     Style="{StaticResource TextBoxInError}"
+                                     Margin="6,0,0,0">
                                 <TextBox.Text>
                                     <Binding Path="CustomPercentage"
                                              UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
-                                            <local:RangeRule Min="0" Max="100" />
+                                            <local:RangeRule Min="0"
+                                                             Max="100" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
-                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0">% black output offset</TextBlock>
+                            <TextBlock VerticalAlignment="Center"
+                                       Margin="2,0,0,0">% black output offset</TextBlock>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-                            <CheckBox IsChecked="{Binding DisableOptimization}" VerticalAlignment="Center">Disable 8-bit color optimization</CheckBox>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,2,0,0">
+                            <CheckBox IsChecked="{Binding DisableOptimization}"
+                                      VerticalAlignment="Center">Disable 8-bit color optimization</CheckBox>
                         </StackPanel>
                     </StackPanel>
                 </RadioButton>
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="Dithering" Padding="6">
+        <GroupBox Header="Dithering"
+                  Padding="6">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -187,15 +365,23 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Label HorizontalAlignment="Right">State</Label>
-                <ComboBox SelectedIndex="{Binding DitherState}" Name="DitherState" VerticalAlignment="Center"
-                          Grid.Row="0" Grid.Column="1">
+                <ComboBox SelectedIndex="{Binding DitherState}"
+                          Name="DitherState"
+                          VerticalAlignment="Center"
+                          Grid.Row="0"
+                          Grid.Column="1">
                     <ComboBoxItem>Default</ComboBoxItem>
                     <ComboBoxItem>Enable</ComboBoxItem>
                     <ComboBoxItem>Disable</ComboBoxItem>
                 </ComboBox>
-                <Label HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0">Mode</Label>
-                <ComboBox IsEnabled="{Binding CustomDither}" SelectedIndex="{Binding DitherMode}" Name="DitherMode"
-                          VerticalAlignment="Center" Grid.Row="1"
+                <Label HorizontalAlignment="Right"
+                       Grid.Row="1"
+                       Grid.Column="0">Mode</Label>
+                <ComboBox IsEnabled="{Binding CustomDither}"
+                          SelectedIndex="{Binding DitherMode}"
+                          Name="DitherMode"
+                          VerticalAlignment="Center"
+                          Grid.Row="1"
                           Grid.Column="1">
                     <ComboBoxItem>SpatialDynamic</ComboBoxItem>
                     <ComboBoxItem>SpatialStatic</ComboBoxItem>
@@ -203,9 +389,14 @@
                     <ComboBoxItem>SpatialStatic2x2</ComboBoxItem>
                     <ComboBoxItem>Temporal</ComboBoxItem>
                 </ComboBox>
-                <Label HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0">Bits</Label>
-                <ComboBox IsEnabled="{Binding CustomDither}" SelectedIndex="{Binding DitherBits}" Name="DitherBits"
-                          VerticalAlignment="Center" Grid.Row="2"
+                <Label HorizontalAlignment="Right"
+                       Grid.Row="2"
+                       Grid.Column="0">Bits</Label>
+                <ComboBox IsEnabled="{Binding CustomDither}"
+                          SelectedIndex="{Binding DitherBits}"
+                          Name="DitherBits"
+                          VerticalAlignment="Center"
+                          Grid.Row="2"
                           Grid.Column="1">
                     <ComboBoxItem>6 bit</ComboBoxItem>
                     <ComboBoxItem>8 bit</ComboBoxItem>
@@ -213,9 +404,15 @@
                 </ComboBox>
             </Grid>
         </GroupBox>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,6,0,0">
-            <Button Width="75" Click="OK_Click" Margin="0,0,6,0" IsDefault="True">OK</Button>
-            <Button Width="75" IsCancel="True">Cancel</Button>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,6,0,0">
+            <Button Width="75"
+                    Click="OK_Click"
+                    Margin="0,0,6,0"
+                    IsDefault="True">OK</Button>
+            <Button Width="75"
+                    IsCancel="True">Cancel</Button>
         </StackPanel>
     </StackPanel>
 </Window>

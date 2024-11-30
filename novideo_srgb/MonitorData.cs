@@ -77,7 +77,10 @@ namespace novideo_srgb
             ProfilePath = "";
             CustomGamma = 2.2;
             CustomPercentage = 100;
-            RedScaler = 1.0;
+            RedScaler = 100.00;
+            GreenScaler = 100.00;
+            BlueScaler = 100.00;
+            LinearScaleSpace = false;
         }
 
         /**
@@ -85,7 +88,7 @@ namespace novideo_srgb
         **/
         public MonitorData(MainViewModel viewModel, int number, Display display, string path, bool hdrActive, bool clampSdr, bool useIcc, string profilePath,
             bool calibrateGamma,
-            int selectedGamma, double customGamma, double customPercentage, int target, bool disableOptimization, double redScaler) :
+            int selectedGamma, double customGamma, double customPercentage, int target, bool disableOptimization, double redScaler, double greenScaler, double blueScaler, bool linearScaleSpace) :
             this(viewModel, number, display, path, hdrActive, clampSdr)
         {
             UseIcc = useIcc;
@@ -97,6 +100,9 @@ namespace novideo_srgb
             Target = target;
             DisableOptimization = disableOptimization;
             RedScaler = redScaler;
+            GreenScaler = greenScaler;
+            BlueScaler = blueScaler;
+            LinearScaleSpace = linearScaleSpace;
         }
 
         public int Number { get; }
@@ -123,6 +129,7 @@ namespace novideo_srgb
                 var profile = ICCMatrixProfile.FromFile(ProfilePath);
                 if (CalibrateGamma)
                 {
+
                     var trcBlack = Matrix.FromValues(new[,]
                     {
                         { profile.trcs[0].SampleAt(0) },
@@ -234,15 +241,30 @@ namespace novideo_srgb
 
         public int Target { set; get; }
 
+        public bool LinearScaleSpace { set; get; }
+
         public double RedScaler { set; get; }
+
+        public double GreenScaler { set; get; }
+
+        public double BlueScaler { set; get; }
 
         public Colorimetry.ColorSpace EdidColorSpace { get; }
 
-        private Colorimetry.ColorSpace TargetColorSpace {
+        public Colorimetry.ColorSpace TargetColorSpace {
             get{
                 Colorimetry.ColorSpace space =  Colorimetry.ColorSpaces[Target];
-                space.Red.X = space.Red.X * RedScaler;
-                return space;
+                if (LinearScaleSpace)
+                {
+                    space.Red.X = Colorimetry.D65.X + (space.Red.X - Colorimetry.D65.X) * RedScaler/100;
+                    space.Red.Y = Colorimetry.D65.Y + (space.Red.Y - Colorimetry.D65.Y) * RedScaler / 100;
+                    space.Green.X = Colorimetry.D65.X + (space.Green.X - Colorimetry.D65.X) * GreenScaler / 100;
+                    space.Green.Y = Colorimetry.D65.Y + (space.Green.Y - Colorimetry.D65.Y) * GreenScaler / 100;
+                    space.Blue.X = Colorimetry.D65.X + (space.Blue.X - Colorimetry.D65.X) * BlueScaler / 100;
+                    space.Blue.Y = Colorimetry.D65.Y + (space.Blue.Y - Colorimetry.D65.Y) * BlueScaler / 100;
+                }
+                    
+                    return space;
             }
              }
 

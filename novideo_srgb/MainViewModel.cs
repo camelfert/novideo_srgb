@@ -97,7 +97,10 @@ namespace novideo_srgb
                         (double)settings.Attribute("custom_percentage"),
                         (int)settings.Attribute("target"),
                         (bool)settings.Attribute("disable_optimization"),
-                        (double)settings.Attribute("red_scaler"));
+                        (double)settings.Attribute("red_scaler"),
+                        (double)settings.Attribute("green_scaler"),
+                        (double)settings.Attribute("blue_scaler"),
+                        (bool)settings.Attribute("linear_scale_space"));
                 }
                 else
                 {
@@ -140,7 +143,10 @@ namespace novideo_srgb
                             new XAttribute("custom_percentage", x.CustomPercentage),
                             new XAttribute("target", x.Target),
                             new XAttribute("disable_optimization", x.DisableOptimization),
-                            new XAttribute("red_scaler", x.RedScaler))));
+                            new XAttribute("red_scaler", x.RedScaler),
+                            new XAttribute("green_scaler", x.GreenScaler),
+                            new XAttribute("blue_scaler", x.BlueScaler),
+                            new XAttribute("linear_scale_space", x.LinearScaleSpace))));
                 xElem.Save(_configPath);
             }
             catch (Exception ex)
