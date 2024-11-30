@@ -80,7 +80,7 @@
                                 <TextBox.Text>
                                     <Binding Path="RedScaler"
                                              
-                                             UpdateSourceTrigger="PropertyChanged"
+                                             UpdateSourceTrigger="LostFocus"
                                             >
                                     </Binding>
                                 </TextBox.Text>
@@ -118,7 +118,7 @@
                                  VerticalAlignment="Center">
                             <TextBox.Text>
                                 <Binding Path="GreenScaler"
-                                         UpdateSourceTrigger="PropertyChanged"
+                                         UpdateSourceTrigger="LostFocus"
                                          >
                                 </Binding>
                             </TextBox.Text>
@@ -154,7 +154,7 @@
                                  VerticalAlignment="Center">
                             <TextBox.Text>
                                 <Binding Path="BlueScaler"
-                                         UpdateSourceTrigger="PropertyChanged"
+                                         UpdateSourceTrigger="LostFocus"
                                          >
                                 </Binding>
                             </TextBox.Text>

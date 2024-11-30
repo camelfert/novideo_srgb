@@ -89,9 +89,9 @@ namespace novideo_srgb
             _monitor.DisableOptimization = _disableOptimization;
             ChangedCalibration |= _monitor.RedScaler != _redScaler;
             _monitor.RedScaler = _redScaler;
-            ChangedCalibration |= _monitor.RedScaler != _greenScaler;
+            ChangedCalibration |= _monitor.GreenScaler != _greenScaler;
             _monitor.GreenScaler = _greenScaler;
-            ChangedCalibration |= _monitor.RedScaler != _blueScaler;
+            ChangedCalibration |= _monitor.BlueScaler != _blueScaler;
             _monitor.BlueScaler = _blueScaler;
             ChangedCalibration |= _monitor.LinearScaleSpace != _linearScaleSpace;
             _monitor.LinearScaleSpace = _linearScaleSpace;
