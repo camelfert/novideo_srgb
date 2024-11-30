@@ -20,6 +20,7 @@ namespace novideo_srgb
 
         private readonly GPUOutput _output;
         private bool _clamped;
+        private bool _linearScaleSpace;
         private int _bitDepth;
         private Novideo.DitherControl _dither;
 
@@ -81,6 +82,7 @@ namespace novideo_srgb
             GreenScaler = 100.00;
             BlueScaler = 100.00;
             LinearScaleSpace = false;
+            _linearScaleSpace = LinearScaleSpace;
         }
 
         /**
@@ -241,7 +243,29 @@ namespace novideo_srgb
 
         public int Target { set; get; }
 
-        public bool LinearScaleSpace { set; get; }
+        public bool LinearScaleSpace
+        {
+            set
+            {
+
+                _linearScaleSpace = value;
+                OnPropertyChanged();
+                try
+                {
+                    UpdateClamp(Clamped);
+                    ClampSdr = Clamped;
+                    _viewModel.SaveConfig();
+                }
+                catch (Exception e)
+                {
+                    HandleClampException(e);
+                    return;
+                }
+
+            }
+
+            get => _linearScaleSpace;
+        }
 
         public double RedScaler { set; get; }
 

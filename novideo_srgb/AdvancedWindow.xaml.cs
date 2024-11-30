@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace novideo_srgb
@@ -56,6 +57,11 @@ namespace novideo_srgb
         {
             _viewModel.ApplyChanges();
             DialogResult = true;
+        }
+
+        private void APPLY_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.ApplyChanges();
         }
 
         public bool ChangedCalibration => _viewModel.ChangedCalibration;

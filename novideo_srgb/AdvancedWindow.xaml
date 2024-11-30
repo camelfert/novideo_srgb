@@ -43,7 +43,7 @@
 
                 </StackPanel>
                 <CheckBox IsChecked="{Binding LinearScaleSpace}"
-                          VerticalAlignment="Center">Linearly Scale Space</CheckBox>
+                          VerticalAlignment="Center">Linearly Scale Colour Space</CheckBox>
                     <StackPanel IsEnabled="{Binding LinearScaleSpace}">
 
                         <Grid>
@@ -421,6 +421,10 @@
                     IsDefault="True">OK</Button>
             <Button Width="75"
                     IsCancel="True">Cancel</Button>
+            <Button Width="75"
+                    Click="APPLY_Click"
+                    Margin="5,0,10,0"
+                    IsDefault="True">Apply</Button>
         </StackPanel>
     </StackPanel>
 </Window>
