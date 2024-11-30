@@ -90,7 +90,7 @@
                             <Label Grid.Row="0"
                                    Grid.Column="3">sat%</Label>
                             <TextBox IsEnabled="False"
-                                     Text="{Binding ScaledRedX, Mode=OneWay, StringFormat={}{0:#,0.000}}"
+                                     Text="{Binding ScaledRedX, Mode=OneWay, StringFormat={}{0:#,0.00000}}"
                                      IsReadOnly="True"
                                      Grid.Row="0"
                                      Grid.Column="4"
@@ -98,7 +98,7 @@
                             <Label Grid.Row="0"
                                    Grid.Column="5">x</Label>
                             <TextBox IsEnabled="False"
-                                     Text="{Binding ScaledRedY, Mode=OneWay, StringFormat={}{0:#,0.000}}"
+                                     Text="{Binding ScaledRedY, Mode=OneWay, StringFormat={}{0:#,0.00000}}"
                                      IsReadOnly="True"
                                      Grid.Row="0"
                                      Grid.Column="6"
@@ -131,7 +131,7 @@
                         <Label Grid.Row="1"
                                Grid.Column="3">sat%</Label>
                         <TextBox IsEnabled="False"
-                                 Text="{Binding ScaledGreenX, Mode=OneWay, StringFormat={}{0:#,0.000}}"
+                                 Text="{Binding ScaledGreenX, Mode=OneWay, StringFormat={}{0:#,0.00000}}"
                                  IsReadOnly="True"
                                  Grid.Row="1"
                                  Grid.Column="4"
@@ -139,7 +139,7 @@
                         <Label Grid.Row="1"
                                Grid.Column="5">x</Label>
                         <TextBox IsEnabled="False"
-                                 Text="{Binding ScaledGreenY, Mode=OneWay, StringFormat={}{0:#,0.000}}"
+                                 Text="{Binding ScaledGreenY, Mode=OneWay, StringFormat={}{0:#,0.00000}}"
                                  IsReadOnly="True"
                                  Grid.Row="1"
                                  Grid.Column="6"
@@ -170,7 +170,7 @@
                         <Label Grid.Row="2"
                                Grid.Column="3">sat%</Label>
                         <TextBox IsEnabled="False"
-                                 Text="{Binding ScaledBlueX, Mode=OneWay, StringFormat={}{0:#,0.000}}"
+                                 Text="{Binding ScaledBlueX, Mode=OneWay, StringFormat={}{0:#,0.00000}}"
                                  IsReadOnly="True"
                                  Grid.Row="2"
                                  Grid.Column="4"
@@ -178,7 +178,7 @@
                         <Label Grid.Row="2"
                                Grid.Column="5">x</Label>
                         <TextBox IsEnabled="False"
-                                 Text="{Binding ScaledBlueY, Mode=OneWay, StringFormat={}{0:#,0.000}}"
+                                 Text="{Binding ScaledBlueY, Mode=OneWay, StringFormat={}{0:#,0.00000}}"
                                  IsReadOnly="True"
                                  Grid.Row="2"
                                  Grid.Column="6"
