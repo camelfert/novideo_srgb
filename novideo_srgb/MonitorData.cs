@@ -105,6 +105,7 @@ namespace novideo_srgb
             GreenScaler = greenScaler;
             BlueScaler = blueScaler;
             LinearScaleSpace = linearScaleSpace;
+            // aaaahhhhhh
         }
 
         public int Number { get; }
