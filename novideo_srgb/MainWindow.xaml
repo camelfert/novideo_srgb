@@ -60,7 +60,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      IsEnabled="{Binding CanClamp}"
+                                      IsEnabled="{Binding Clamped}"
                                       IsChecked="{Binding LinearScaleSpace, UpdateSourceTrigger=PropertyChanged}"
                                       />
                         </DataTemplate>

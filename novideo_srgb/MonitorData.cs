@@ -116,16 +116,17 @@ namespace novideo_srgb
 
         private void UpdateClamp(bool doClamp)
         {
-            if (_clamped)
+            if (!doClamp)
             {
                 Novideo.DisableColorSpaceConversion(_output);
+                return;
             }
-
-            if (!doClamp) return;
 
             if (_clamped) Thread.Sleep(100);
             if (UseEdid)
+            {
                 Novideo.SetColorSpaceConversion(_output, Colorimetry.RGBToRGB(TargetColorSpace, EdidColorSpace));
+            }
             else if (UseIcc)
             {
                 var profile = ICCMatrixProfile.FromFile(ProfilePath);
@@ -207,6 +208,7 @@ namespace novideo_srgb
             try
             {
                 var clamped = CanClamp && ClampSdr;
+                UpdateClamp(false);
                 UpdateClamp(clamped);
                 _clamped = clamped;
                 OnPropertyChanged(nameof(CanClamp));
