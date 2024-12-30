@@ -19,7 +19,7 @@ namespace novideo_srgb
         {
             if (Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length > 1)
             {
-                MessageBox.Show("Already running!");
+                MessageBox.Show("Already running! Check the taskbar tray.");
                 Close();
                 return;
             }
@@ -97,7 +97,7 @@ namespace novideo_srgb
         {
             var notifyIcon = new NotifyIcon
             {
-                Text = "Novideo sRGB",
+                Text = "NoVideo sRGB",
                 Icon = Properties.Resources.icon,
                 Visible = true
             };
@@ -105,8 +105,10 @@ namespace novideo_srgb
             notifyIcon.MouseDoubleClick +=
                 delegate
                 {
+                    WindowState = WindowState.Minimized;
                     Show();
                     WindowState = WindowState.Normal;
+                    Activate();
                 };
 
             _contextMenu = new ContextMenu();
@@ -151,6 +153,11 @@ namespace novideo_srgb
             {
                 monitor.ReapplyClamp();
             }
+        }
+
+        private void DataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
