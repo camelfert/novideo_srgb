@@ -26,6 +26,8 @@ namespace novideo_srgb
         private double _customPercentage;
         private bool _disableOptimization;
         private bool _linearScaleSpace;
+        private bool _customContrastSet;
+        private int _customContrast;
 
 
         private int _ditherState;
@@ -56,10 +58,16 @@ namespace novideo_srgb
             _greenScaler = monitor.GreenScaler;
             _blueScaler = monitor.BlueScaler;
             _linearScaleSpace = monitor.LinearScaleSpace;
+            _customContrast = monitor.CustomContrast;
+            _customContrastSet = monitor.CustomContrastSet;
         }
 
         public void ApplyChanges()
         {
+            ChangedCalibration |= _monitor.CustomContrastSet != _customContrastSet;
+            _monitor.CustomContrastSet = _customContrastSet;
+            ChangedCalibration |= _monitor.CustomContrast != _customContrast;
+            _monitor.CustomContrast = _customContrast;
             ChangedCalibration |= _monitor.Target != _target;
             _monitor.Target = _target;
             ChangedCalibration |= _monitor.UseIcc != _useIcc;
@@ -148,6 +156,28 @@ namespace novideo_srgb
                 OnPropertyChanged();
             }
             get => _linearScaleSpace;
+        }
+
+        public bool CustomContrastSet
+        {
+            set
+            {
+                if (value == _customContrastSet) return;
+                _customContrastSet = value;
+                OnPropertyChanged();
+            }
+            get => _customContrastSet;
+        }
+
+        public int CustomContrast
+        {
+            set
+            {
+                if (value == _customContrast) return;
+                _customContrast = value;
+                OnPropertyChanged();
+            }
+            get => _customContrast;
         }
 
         public double ScaledRedX => Colorimetry.D65.X + (Colorimetry.ColorSpaces[Target].Red.X - Colorimetry.D65.X) * RedScaler / 100;

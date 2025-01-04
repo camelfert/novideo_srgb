@@ -191,7 +191,7 @@ namespace novideo_srgb
         public static unsafe void SetColorSpaceConversion(GPUOutput output, ICCMatrixProfile profile,
             Colorimetry.ColorSpace target,
             ToneCurve curve = null,
-            bool disableOptimization = false)
+            bool disableOptimization = false, int contrast = 0)
         {
             var matrix = profile.matrix.Inverse() * Colorimetry.RGBToPCSXYZ(target);
 
@@ -272,6 +272,13 @@ namespace novideo_srgb
 
                         gamma[1, i, j] = (float)value;
                     }
+                }
+
+                if (contrast >= 5)
+                {
+                    gamma[0, 0, 0] = 1.0f / contrast;
+                    gamma[0, 0, 1] = gamma[0, 0, 0];
+                    gamma[0, 0, 2] = gamma[0, 0, 0];
                 }
 
                 var status = NvAPI_GPU_SetColorSpaceConversion(displayId, ref csc);

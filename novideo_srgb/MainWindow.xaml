@@ -56,6 +56,22 @@
                         </Style>
                     </DataGridTemplateColumn.CellStyle>
                 </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Set CR">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      IsEnabled="{Binding Clamped}"
+                                      IsChecked="{Binding CustomContrastSet, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Margin"
+                                    Value="0,0,-1,0" />
+                        </Style>
+                    </DataGridTemplateColumn.CellStyle>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="LinScale">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

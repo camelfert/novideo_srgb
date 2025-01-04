@@ -21,6 +21,7 @@ namespace novideo_srgb
         private readonly GPUOutput _output;
         private bool _clamped;
         private bool _linearScaleSpace;
+        private bool _customContrastSet;
         private int _bitDepth;
         private Novideo.DitherControl _dither;
 
@@ -77,12 +78,18 @@ namespace novideo_srgb
 
             ProfilePath = "";
             CustomGamma = 2.2;
+            CustomContrastSet = false;
+            CustomContrast = 0;
             CustomPercentage = 100;
             RedScaler = 100.00;
             GreenScaler = 100.00;
             BlueScaler = 100.00;
             LinearScaleSpace = false;
+            CustomContrast = 0;
+            CustomContrastSet = false;
+
             _linearScaleSpace = LinearScaleSpace;
+            _customContrastSet = CustomContrastSet;
         }
 
         /**
@@ -90,7 +97,7 @@ namespace novideo_srgb
         **/
         public MonitorData(MainViewModel viewModel, int number, Display display, string path, bool hdrActive, bool clampSdr, bool useIcc, string profilePath,
             bool calibrateGamma,
-            int selectedGamma, double customGamma, double customPercentage, int target, bool disableOptimization, double redScaler, double greenScaler, double blueScaler, bool linearScaleSpace) :
+            int selectedGamma, double customGamma, double customPercentage, int target, bool disableOptimization, double redScaler, double greenScaler, double blueScaler, bool linearScaleSpace, int customContrast, bool customContrastSet) :
             this(viewModel, number, display, path, hdrActive, clampSdr)
         {
             UseIcc = useIcc;
@@ -98,7 +105,9 @@ namespace novideo_srgb
             CalibrateGamma = calibrateGamma;
             SelectedGamma = selectedGamma;
             CustomGamma = customGamma;
+            CustomContrastSet = customContrastSet;
             CustomPercentage = customPercentage;
+            CustomContrast = customContrast;
             Target = target;
             DisableOptimization = disableOptimization;
             RedScaler = redScaler;
@@ -151,10 +160,10 @@ namespace novideo_srgb
                             gamma = new GammaToneCurve(2.4, black, 0);
                             break;
                         case 2:
-                            gamma = new GammaToneCurve(CustomGamma, black, CustomPercentage / 100);
+                            gamma = new GammaToneCurve(CustomGamma, black, CustomPercentage / 100, contrast: CustomContrastSet ? CustomContrast : 0);
                             break;
                         case 3:
-                            gamma = new GammaToneCurve(CustomGamma, black, CustomPercentage / 100, true);
+                            gamma = new GammaToneCurve(CustomGamma, black, CustomPercentage / 100, true, contrast: CustomContrastSet ? CustomContrast: 0);
                             break;
                         case 4:
                             gamma = new LstarEOTF(black);
@@ -163,7 +172,7 @@ namespace novideo_srgb
                             throw new NotSupportedException("Unsupported gamma type " + SelectedGamma);
                     }
 
-                    Novideo.SetColorSpaceConversion(_output, profile, TargetColorSpace, gamma, DisableOptimization);
+                    Novideo.SetColorSpaceConversion(_output, profile, TargetColorSpace, gamma, DisableOptimization, contrast: CustomContrastSet ? CustomContrast : 0);
                 }
                 else
                 {
@@ -238,6 +247,31 @@ namespace novideo_srgb
         public int SelectedGamma { set; get; }
 
         public double CustomGamma { set; get; }
+
+        public int CustomContrast { set; get; }
+
+        public bool CustomContrastSet {
+            set
+            {
+
+                _customContrastSet = value;
+                OnPropertyChanged();
+                try
+                {
+                    UpdateClamp(Clamped);
+                    ClampSdr = Clamped;
+                    _viewModel.SaveConfig();
+                }
+                catch (Exception e)
+                {
+                    HandleClampException(e);
+                    return;
+                }
+
+            }
+
+            get => _customContrastSet;
+        }
 
         public double CustomPercentage { set; get; }
 

@@ -100,7 +100,9 @@ namespace novideo_srgb
                         (double)settings.Attribute("red_scaler"),
                         (double)settings.Attribute("green_scaler"),
                         (double)settings.Attribute("blue_scaler"),
-                        (bool)settings.Attribute("linear_scale_space"));
+                        (bool)settings.Attribute("linear_scale_space"),
+                        (int)settings.Attribute("custom_contrast"),
+                        (bool)settings.Attribute("custom_contrast_set"));
                 }
                 else
                 {
@@ -152,7 +154,10 @@ namespace novideo_srgb
                             new XAttribute("red_scaler", x.RedScaler),
                             new XAttribute("green_scaler", x.GreenScaler),
                             new XAttribute("blue_scaler", x.BlueScaler),
-                            new XAttribute("linear_scale_space", x.LinearScaleSpace))));
+                            new XAttribute("linear_scale_space", x.LinearScaleSpace),
+                            new XAttribute("custom_contrast", x.CustomContrast),
+                            new XAttribute("custom_contrast_set", x.CustomContrastSet)
+                            )));
                 if (offlineEntries != null)
                 {
                     xElem.Add(offlineEntries);
