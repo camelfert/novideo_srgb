@@ -97,12 +97,12 @@ namespace novideo_srgb
                         (double)settings.Attribute("custom_percentage"),
                         (int)settings.Attribute("target"),
                         (bool)settings.Attribute("disable_optimization"),
-                        (double)settings.Attribute("red_scaler"),
-                        (double)settings.Attribute("green_scaler"),
-                        (double)settings.Attribute("blue_scaler"),
-                        (bool)settings.Attribute("linear_scale_space"),
-                        (int)settings.Attribute("custom_contrast"),
-                        (bool)settings.Attribute("custom_contrast_set"));
+                        (double?)settings.Attribute("red_scaler") ?? 100,
+                        (double?)settings.Attribute("green_scaler") ?? 100,
+                        (double?)settings.Attribute("blue_scaler") ?? 100,
+                        (bool?)settings.Attribute("linear_scale_space") ?? false,
+                        (int?)settings.Attribute("custom_contrast") ?? 0,
+                        (bool?)settings.Attribute("custom_contrast_set") ?? false);
                 }
                 else
                 {

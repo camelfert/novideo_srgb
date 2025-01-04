@@ -78,7 +78,6 @@ namespace novideo_srgb
 
             ProfilePath = "";
             CustomGamma = 2.2;
-            CustomContrastSet = false;
             CustomContrast = 0;
             CustomPercentage = 100;
             RedScaler = 100.00;
@@ -151,6 +150,12 @@ namespace novideo_srgb
                     });
                     var black = (profile.matrix * trcBlack)[1];
 
+
+                    if (CustomContrastSet && (CustomContrast >= 5))
+                    {
+                        black = 1.0 / CustomContrast;
+                    }
+
                     ToneCurve gamma;
                     switch (SelectedGamma)
                     {
@@ -161,10 +166,10 @@ namespace novideo_srgb
                             gamma = new GammaToneCurve(2.4, black, 0);
                             break;
                         case 2:
-                            gamma = new GammaToneCurve(CustomGamma, black, CustomPercentage / 100, contrast: CustomContrastSet ? CustomContrast : 0);
+                            gamma = new GammaToneCurve(CustomGamma, black, CustomPercentage / 100);
                             break;
                         case 3:
-                            gamma = new GammaToneCurve(CustomGamma, black, CustomPercentage / 100, true, contrast: CustomContrastSet ? CustomContrast: 0);
+                            gamma = new GammaToneCurve(CustomGamma, black, CustomPercentage / 100, true);
                             break;
                         case 4:
                             gamma = new LstarEOTF(black);

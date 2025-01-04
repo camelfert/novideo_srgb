@@ -9,13 +9,8 @@ namespace novideo_srgb
         private double _b;
         private readonly double _c;
 
-        public unsafe GammaToneCurve(double gamma, double black = 0, double outputOffset = 1, bool relative = false, int contrast = 0)
-        {
-            if (contrast >= 5)
-            {
-                black = 1.0/ contrast;
-            }
-            
+        public unsafe GammaToneCurve(double gamma, double black = 0, double outputOffset = 1, bool relative = false)
+        {  
             if (black == 0)
             {
                 _gamma = gamma;

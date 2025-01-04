@@ -327,6 +327,30 @@
                                 </TextBox.Text>
                             </TextBox>
                         </StackPanel>
+                        <StackPanel Margin="20,3,0,0"
+                                    Visibility="{Binding CalibrateGamma}"
+                                    IsEnabled="{Binding CalibrateGamma}"
+                                    Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding CustomContrastSet}"
+                                      VerticalAlignment="Center">Set contrast ratio to</CheckBox>
+                            <TextBox VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center"
+                                     TextAlignment="Right"
+                                     Height="22"
+                                     Width="40"
+                                     Style="{StaticResource TextBoxInError}"
+                                     Margin="6,0,0,0">
+                                <TextBox.Text>
+                                    <Binding Path="CustomContrast"
+                                             UpdateSourceTrigger="PropertyChanged">
+
+                                    </Binding>
+                                </TextBox.Text>
+
+                            </TextBox>
+                            <TextBlock VerticalAlignment="Center"
+                                       Margin="2,0,0,0">:1   (Disable when near native CR)</TextBlock>
+                        </StackPanel>
                         <StackPanel Margin="20,0,0,0"
                                     Visibility="{Binding UseCustomGamma}"
                                     IsEnabled="{Binding CalibrateGamma}"
@@ -352,30 +376,7 @@
                             <TextBlock VerticalAlignment="Center"
                                        Margin="2,0,0,0">% black output offset</TextBlock>
                         </StackPanel>
-                        <StackPanel Margin="20,0,0,0"
-                                    Visibility="{Binding UseCustomGamma}"
-                                    IsEnabled="{Binding CalibrateGamma}"
-                                    Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding CustomContrastSet}"
-                                      VerticalAlignment="Center">Set contrast ratio to</CheckBox>
-                            <TextBox VerticalAlignment="Center"
-                                     VerticalContentAlignment="Center"
-                                     TextAlignment="Right"
-                                     Height="22"
-                                     Width="40"
-                                     Style="{StaticResource TextBoxInError}"
-                                     Margin="6,0,0,0">
-                                <TextBox.Text>
-                                    <Binding Path="CustomContrast"
-                                             UpdateSourceTrigger="PropertyChanged">
-                                        
-                                    </Binding>
-                                </TextBox.Text>
-                                
-                            </TextBox>
-                            <TextBlock VerticalAlignment="Center"
-                                       Margin="2,0,0,0">:1   (Disable when near native CR)</TextBlock>
-                        </StackPanel>
+                        
                         <StackPanel Orientation="Horizontal"
                                     Margin="0,2,0,0">
                             <CheckBox IsChecked="{Binding DisableOptimization}"
