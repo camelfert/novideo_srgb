@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:novideo_srgb"
-        ResizeMode="CanMinimize"
+        ResizeMode="CanResize"
         mc:Ignorable="d"
-        Title="Novideo sRGB" Height="320" Width="500" MinHeight="150" MinWidth="300">
+        Title="Novideo sRGB" Height="200" Width="500" MinHeight="150" MinWidth="300">
     <Window.DataContext>
         <local:MainViewModel />
     </Window.DataContext>
@@ -22,8 +22,9 @@
             </WrapPanel>
         </Grid>
         <DataGrid ItemsSource="{Binding Monitors}" RowHeaderWidth="0" AutoGenerateColumns="False"
-                  DockPanel.Dock="Bottom" Margin="0,0,0,6" CanUserResizeColumns="False" CanUserSortColumns="False"
-                  CanUserReorderColumns="False">
+                  DockPanel.Dock="Bottom" Margin="0,0,0,6" CanUserResizeColumns="False" CanUserSortColumns="True"
+                  CanUserReorderColumns="False"
+                  SelectionChanged="DataGrid_SelectionChanged">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <Setter Property="Template">
