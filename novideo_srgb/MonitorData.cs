@@ -84,7 +84,7 @@ namespace novideo_srgb
             GreenScaler = 100.00;
             BlueScaler = 100.00;
             LinearScaleSpace = false;
-            CustomContrast = 0;
+            CustomContrast = 1500;
             CustomContrastSet = false;
 
             _linearScaleSpace = LinearScaleSpace;

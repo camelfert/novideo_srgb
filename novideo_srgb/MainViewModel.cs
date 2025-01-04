@@ -101,7 +101,7 @@ namespace novideo_srgb
                         (double?)settings.Attribute("green_scaler") ?? 100,
                         (double?)settings.Attribute("blue_scaler") ?? 100,
                         (bool?)settings.Attribute("linear_scale_space") ?? false,
-                        (int?)settings.Attribute("custom_contrast") ?? 0,
+                        (int?)settings.Attribute("custom_contrast") ?? 1500,
                         (bool?)settings.Attribute("custom_contrast_set") ?? false);
                 }
                 else
