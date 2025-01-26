@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:novideo_srgb"
         ResizeMode="CanResize"
         mc:Ignorable="d"
-        Title="Novideo sRGB" Height="200" Width="500" MinHeight="150" MinWidth="300">
+        Title="Novideo sRGB" Height="200" Width="763" MinHeight="150" MinWidth="300">
     <Window.DataContext>
         <local:MainViewModel />
     </Window.DataContext>
@@ -41,7 +41,15 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#" Binding="{Binding Number}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" />
-                <DataGridTextColumn Header="Dithering" Width="*" Binding="{Binding DitherString}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Dithering" Width="Auto" Binding="{Binding DitherString}" IsReadOnly="True" />
+                <DataGridTextColumn Header="ICC Profile"
+                                    Width="150"
+                                    Binding="{Binding ProfileName}"
+                                    IsReadOnly="True" />
+                <DataGridTextColumn Header="Gamma"
+                                    Width="Auto"
+                                    Binding="{Binding CustomGammaString}"
+                                    IsReadOnly="True" />
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

@@ -227,6 +227,11 @@ namespace novideo_srgb
                 UpdateClamp(clamped);
                 _clamped = clamped;
                 OnPropertyChanged(nameof(CanClamp));
+                OnPropertyChanged(nameof(ProfilePath));
+                OnPropertyChanged(nameof(ProfileName));
+                OnPropertyChanged(nameof(UseIcc));
+                OnPropertyChanged(nameof(CustomGamma));
+                OnPropertyChanged(nameof(CustomGammaString));
             }
             catch (Exception e)
             {
@@ -253,6 +258,35 @@ namespace novideo_srgb
         public int SelectedGamma { set; get; }
 
         public double CustomGamma { set; get; }
+
+        public string CustomGammaString
+        {
+            get
+            {
+                if (CalibrateGamma)
+                {
+                    switch (SelectedGamma)
+                    {
+                        case 0:
+                            return "sRGB";
+                        case 1:
+                            return "BT.1886";
+                        case 2:
+                            return CustomGamma.ToString();
+                        case 3:
+                            return CustomGamma.ToString();
+                        case 4:
+                            return "L*";
+                        default:
+                            return "Error";
+                    }
+                }
+                else
+                {
+                    return "Not used";
+                }
+            }
+        }
 
         public int CustomContrast { set; get; }
 
@@ -329,8 +363,8 @@ namespace novideo_srgb
                     space.Blue.X = Colorimetry.D65.X + (space.Blue.X - Colorimetry.D65.X) * BlueScaler / 100;
                     space.Blue.Y = Colorimetry.D65.Y + (space.Blue.Y - Colorimetry.D65.Y) * BlueScaler / 100;
                 }
-                    
-                    return space;
+
+                return space;
             }
              }
 
@@ -361,8 +395,21 @@ namespace novideo_srgb
             }
         }
 
+        public string ProfileName
+        {
+            get
+            {
+                if (UseIcc) {
+                    return System.IO.Path.GetFileName(ProfilePath);
+                }
+                else
+                {
+                    return "Not used";
+                }
+            }
+        }
 
-        
+
         public int BitDepth => _bitDepth;
 
         public void ApplyDither(int state, int bits, int mode)
