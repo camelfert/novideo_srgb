@@ -289,7 +289,7 @@ namespace novideo_srgb
 
                 var status = NvAPI_GPU_SetColorSpaceConversion(displayId, ref csc);
 
-                if (status == -104)
+                if (status == -104 || status == -180 || status == -188)
                 {
                     // return here to work around the 531.79 driver regression that causes NVAPI_NOT_SUPPORTED error windows to pop up/spam when going SDR -> HDR
                     return;
